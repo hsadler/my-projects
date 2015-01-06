@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="description" content="SFS Secret Store" />
+    <link rel="stylesheet" href="http://hsadler.github.io/my-projects/my-proj_css.css">
+
+    <script src="http://modernizr.com/downloads/modernizr-latest.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <meta charset="utf-8">
+    <title>SFS Secret Store</title>
+  <style id="jsbin-css">
+#mainContainer {
+  margin: 25px auto;
+  padding: 0;
+  width: 690px;
+  min-height: 900px;
+  height: auto;
+  background: white
+}
+
+#filterButtonWrapper {
+  height: 45px;
+  width: auto;
+  margin: 10px 5px 5px 24px;
+  padding:5px auto;
+}
+
+.filterButton {
+  display: inline-block;
+  background-color: DimGray;
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  width:auto;
+  height:auto;
+  cursor: pointer;
+  margin: 20px 5px 5px 10px;
+  padding: 10px 15px 10px 15px;
+}
+
+.filterButton:hover {
+  background-color: rgb(233,68,22);
+}
+
+.filterButton-selected {
+  background-color: Silver;
+}
+
+.spacerContainer {
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: 20px;
+  *overflow: hidden;
+}
+
+#itemContainer {
+  background-color: white;
+  margin: 30px 20px 0 20px;
+  width: 650px;
+  height: auto;
+  *overflow: hidden;
+}
+
+.behindItem {
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  margin: 0 0 20px 13px;
+  padding: 0;
+  background-color: white;
+  float: left;
+  overflow: hidden;
+}
+
+.item {
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  padding: 0;
+  float: left;
+  *overflow: hidden;
+  cursor: pointer;
+
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
+  -webkit-transition: all 700ms;
+  -moz-transition: all 700ms ;
+  -o-transition: all 700ms ;
+  transition: all 700ms ;
+
+  -webkit-transition-timing-function: cubic-bezier(0.200, 0.540, 0.095, 0.995);
+  -moz-transition-timing-function: cubic-bezier(0.200, 0.540, 0.095, 0.995);
+  -o-transition-timing-function: cubic-bezier(0.200, 0.540, 0.095, 0.995);
+  transition-timing-function: cubic-bezier(0.200, 0.540, 0.095, 0.995);
+}
+
+.new-item {
+  /*a marker */
+}
+
+.itemOverlay {
+  height: 200px;
+  width: 200px;
+  *overflow: hidden;
+
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+
+  -moz-transition-delay: 0s;
+  -o-transition-delay: 0s;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}
+
+.item-startPos {
+  -moz-transform: translatey(200px);
+  -ms-transform: translatey(200px);
+  -o-transform: translatey(200px);
+  -webkit-transform: translatey(200px);
+  transform: translatey(200px);
+  *overflow:hidden;
+}
+
+.itemSlide {
+  -moz-transform: translatey(0);
+  -ms-transform: translatey(0);
+  -o-transform: translatey(0);
+  -webkit-transform: translatey(0);
+  transform: translatey(0);
+  *overflow:hidden;
+}
+
+.keepSlide {
+  -moz-transform: translatey(0);
+  -ms-transform: translatey(0);
+  -o-transform: translatey(0);
+  -webkit-transform: translatey(0);
+  transform: translatey(0);
+  *overflow:hidden;
+}
+
+.itemInfoContainer {
+  height: 200px;
+  width: 200px;
+  float: left;
+  *overflow: hidden;
+}
+
+.itemInfo {
+  height: 60px;
+  margin: 50px 0 auto 0;
+  color: white;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, .4);
+  float: initial;
+  line-height: 20px;
+  text-align: center;
+  padding: 6px;
+  *overflow: hidden;
+}
+
+.learn-more-text {
+  position:absolute;
+  background-color: transparent;
+  color: white;
+  font-weight: initial;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-align: center;
+  float: initial;
+  height: 45px;
+  width: 95px;
+  left:26%;
+  bottom: 10%;
+  padding: 0;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.info-arrow {
+  position: absolute;
+  bottom: 13%;
+  left: 43%;
+  width: 30px;
+  height: 14px;
+  background: url('http://i.imgur.com/e3zhsm5.png');
+}
+
+.moreInfoDiv {
+  background-color: #E4E4E4;
+  max-height: 500px;
+  width: 626px;
+  clear: both;
+  margin: 0 0 0 13px;
+  overflow:hidden;
+  -moz-transition: max-height 0.7s;
+  -o-transition: max-height 0.7s;
+  -webkit-transition: max-height 0.7s;
+  transition: max-height 0.7s;
+  -moz-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+  -moz-transition-delay: 0s;
+  -o-transition-delay: 0s;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s
+}
+
+.moreInfoText {
+  *color: white;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px 20px 10px 20px;
+  display: block;
+}
+
+
+.moreInfoText p {
+  font-size: 13px;
+  margin:0;
+  padding:0;
+}
+
+p.more-info-header {
+  font-size:16px;
+}
+
+p.more-info-fineprint {
+  font-size:10px;
+}
+
+.xCloseInfo {
+  position: relative;
+  height: 28px;
+  width: 32px;
+  text-align: center;
+  padding: 3px 0 0 0;
+  font-family: arial;
+  float: right;
+  font-weight: bold;
+  color: Gray;
+  font-size: 14px;
+  margin: 0 -5px 0 0;
+  cursor: pointer
+}
+
+/* UTILITY CSS */
+.zeroHeight {
+  max-height: 0
+}
+
+.hide {
+  display: none
+}
+
+.hideSpecial {
+  display: none;
+}
+
+/* NEW ITEM LABEL STUFF */
+.new-itemLabel {
+  position: absolute;
+  border-radius:50%;
+  margin: 9px 0 0 9px;
+  height:32px;
+  width:32px;
+  pointer-events:none;
+  z-index: 1;
+  background: rgb(163,94,152); /* Old browsers */
+  background: -moz-linear-gradient(-45deg,  rgba(163,94,152,1) 1%, rgba(138,79,137,1) 50%, rgba(142,82,137,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(1%,rgba(163,94,152,1)), color-stop(50%,rgba(138,79,137,1)), color-stop(100%,rgba(142,82,137,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  rgba(163,94,152,1) 1%,rgba(138,79,137,1) 50%,rgba(142,82,137,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  rgba(163,94,152,1) 1%,rgba(138,79,137,1) 50%,rgba(142,82,137,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg,  rgba(163,94,152,1) 1%,rgba(138,79,137,1) 50%,rgba(142,82,137,1) 100%); /* IE10+ */
+  background: linear-gradient(135deg,  rgba(163,94,152,1) 1%,rgba(138,79,137,1) 50%,rgba(142,82,137,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a35e98', endColorstr='#8e5289',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.new-itemLabel-text {
+  position: absolute;
+  font-family: "Arial Bold", "Helvetica Bold", Arial, sans-serif;
+  font-weight:bold;
+  font-size: 13px;
+  color:white;
+  top:7px;
+  left: 3px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, .4);
+}
+
+/*CURRENTLY BROKEN IN CHROME */
+.spinImage {
+  -moz-transform: rotatey(90deg);
+  -ms-transform: rotatey(90deg);
+  -webkit-transform: rotatey(90deg);
+  -o-transform: rotatey(90deg);
+  transform: rotatey(90deg);
+}
+</style>
+</head>
+  <body>
+
+    <div class="backToMainPage">
+      <a href="http://hsadler.github.io/my-projects/index">back</a>
+    </div>
+
+    <div id="mainContainer">
+
+      <div class="spacerContainer"></div>
+
+      <div id="itemContainer">
+        <!--all items are generated by jscript--><!--their info comes from the ssItems array-->
+      </div>
+
+    </div>
+    <script src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
+  <script id="jsbin-javascript">
+var ssItems_all = [
+    {
+      itemNumber: 'SFS Store',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_SymphonyStore2_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'In-Store and<br />online deals!',
+      info_2: '<p class="more-info-header"><strong>In-Store:</strong> Buy two Keeping Score CDs or DVDs, and get a third one free* when you show your Subscriber Card at the Symphony Store!</p><br /><p>Located inside Davies Symphony Hall, the Symphony Store carries music, books, and gifts for the music lover.</p><br /><p class="more-info-fineprint">*Must be of equal or lesser value. Must present Subscriber Card to receive discount. Expires Nov 30 2014.</p><br /><br />\
+      \
+      <p class="more-info-header"><strong>Online:</strong> Get free shipping on your purchase at <a href="http://www.shopsfsymphony.org/shop/home.php" target="blank">http://www.shopsfsymphony.org</a>! Use promo code <strong>SECRET</strong> at checkout.</p><br /><p>If you have questions regarding your online order please contact us: <a href="mailto:customerservice@sfsymphony.org">customerservice@sfsymphony.org</a></p><br /><p class="more-info-fineprint">*No minimum purchase required. Expires Nov 30 2014.</p>',
+          newItem: true
+    },
+    {
+      itemNumber: 'Patina Restaurant Group',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Patina2_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '10% off<br />food and beverages!',
+      info_2: '<p class="more-info-header">Use promo code <strong>SUBSCRIBER</strong> at  <a href="https://squareup.com/market/sfsymphonypreorder" target="blank">mkt.com/sfsymphonypreorder</a> to save 10% on food and beverage when you pre-order for your next concert!</p><br /><p>Located inside Davies Symphony Hall on the Orchestra Level<br />(415) 252-1937</p><br /><p>Patina Catering offers a range of tasty items at the caf&eacute;s and bars in Davies Symphony Hall, from sandwiches and salads to sweets and other treats.</p><br /><p class="more-info-fineprint">Expires Oct 31, 2014.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Repeat Performance',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_RepeatPerformance_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Buy one,<br />get one half off!',
+      info_2: '<p class="more-info-header">Buy one piece of apparel at full price and get a second item <strong>50% off</strong> when you show your Subscriber Card at the Repeat Performance!</p><br /><p>2436 Fillmore St, <br />San Francisco, CA 94115<br />(415) 563-3123</p><br /><p>Find designer fashions, jewelry, art, china, silver, books, and housewares at Repeat Performance on Fillmore Street. Merchandise is by donation from Symphony patrons and leagues, and local Pacific Heights neighbors, and sets the standard for quality and stylish goods at affordable prices.</p><br /><p class="more-info-fineprint">Expires Nov 30 2014.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Alta CA',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Alta_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Complimentary glass of bubbles!',
+      info_2: '<p class="more-info-header">Show your subscriber card when you dine at Alta CA and receive a <strong>complimentary glass of sparking wine</strong> with any entr&eacute;e order!</p><br /><p>1420 Market St, <br />San Francisco, CA 94102<br />(415) 590-2585</p><br /><p>Alta CA is a neighborhood restaurant and gathering place in the heart of San Francisco that celebrates the best of California\'s diverse ingredients and cultures through inventive fare and spirited drinks. We believe in exceptional quality, craftsmanship, and the magic of truly tasty things. <a href="http://altaca.co/" target="blank">http://altaca.co/</a></p><br /><p class="more-info-fineprint">Deal ends Nov 30 2014.</p>',
+          newItem: true
+    },
+    {
+      itemNumber: 'Atelier Spa',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Atelier_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '10% off a Blow Dry<br />15% off a Beauty Break<br />facial!',
+      info_2: '<p class="more-info-header">Prep for an evening at the Symphony with <strong>10% off</strong> a Blow Dry or <strong>15% off</strong> a Beauty Break facial at Atelier Emmanuel!</p><br /><p>415 Stockton Street @ Sutter | 4th floor<br />(415) 362-8063</p><br /><p>Atelier Emmanuel is a high-end French Hair Salon & Day Spa located next to Union Square, in San Francisco. We prize craftsmanship in the art of Beauty, and maintain an atmosphere that is professional, yet approachable. <a href="http://atelieremmanuel.com/" target="blank">http://atelieremmanuel.com/</a></p><br /><p class="more-info-fineprint">All services require appointments. Expires Nov 30 2014.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Azil Boutique',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Azil_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Save 20% on your<br />purchase!',
+      info_2: '<p class="more-info-header">Show your subscriber card at Azil Boutique and take <strong>20% off</strong> your entire purchase!</p><br /><p>2430 Polk St, <br />San Francisco, CA <br />94109<br />(415) 345-1411<br /><br />451 Hayes St, <br />San Francisco, CA 94102<br />(415) 552-2335</p><br /><p>Located in the bustling neighborhoods of Russian Hill and Hayes Valley in San Francisco, Azil Boutique is a stylish jewelry and accessories boutique that plays host to a handful of talented, independent jewelry and accessories designers.Whether you are shopping for a gift or something just for you, we pride ourselves in carefully curating a collection of designer jewelry and accessories, custom made jewelry, bridal jewelry, handbags, and fashion and trendy accessories for men and women at affordable prices. Personal consultations are available by appointment. <a href="http://shopazil.tumblr.com/">http://shopazil.tumblr.com/</a></p><br /><p class="more-info-fineprint">Expires Dec 31 2014</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Bay Grape',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_BayGrape_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Complimentary<br />beverage!',
+      info_2: '<p class="more-info-header">Show your subscriber card when you shop at Bay Grape and receive a <strong>complimentary beverage</strong> with the purchase of any bottle!</p><br /><p>376 Grand Avenue<br />Oakland, CA 94610<br />(510) 686-3615</p><br /><p>Bay Grape is a wine shop and community gathering place. In addition to wine, beer, cider and specialty soda sold retail, our guests are also welcome to open any bottle in the shop and enjoy it in the store. We also offer wine classes and guided, educational tastings. <a href="http://www.baygrapewine.com/" target="blank">www.baygrapewine.com</a></p><br /><p class="more-info-fineprint">Deal ends Apr 30 2015</p>',
+          newItem: true
+    },
+    {
+      itemNumber: 'Farmgirl',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Farmgirl_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '10% off your<br />entire order!',
+      info_2: '<p class="more-info-header">Use promo code <strong>SFSYMPHONY</strong> at Farmgirl Flowers to save 10% on your order!</p><br /><p>640 Brannan St, <br />San Francisco, CA 94107<br />(415) 602-2939</p><br /><p>FarmGirl Flowers is proud to be a successful, unique and eco-friendly San Francisco flower company. Our goal is to completely change the way flowers are purchased in the United States. We provide beautiful SF flowers at a better price than our competitors, support local farmers and businesses, reduce our environment impact, and save you time. <a href="http://www.indigorestaurant.com/" target="blank">http://www.indigorestaurant.com/</a></p><br /><p class="more-info-fineprint">Valid for online, phone, or in store orders. Expires Dec 31 2014.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Hard Rock Cafe SF',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_HardRockCafeSF_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Free appetizer<br />or dessert!',
+      info_2: '<p class="more-info-header">Enjoy a <strong>complimentary appetizer or dessert</strong> with purchase of two adult entr&eacute;es at Hard Rock Caf&eacute; SF!</p><br /><p>39 Pier #256<br />San Francisco, CA 94133<br />(415) 956-2013</p><br /><p>Back in the day hippies used to congregate at Haight-Ashbury, but these days the rockinest spot is the Hard Rock Cafe San Francisco. Where else can you eat the tastiest burger in town, trippin\' out on groovy rock artifacts and treasures, while jamming to the most outta sight tunes? Our mind-blowing memorabilia collection featuring great locals is far out, man! Now you can get in on big action yourself with the Cafe that\'s rocking San Francisco! <a href="http://www.hardrock.com/cafes/san-francisco/" target="blank">http://www.hardrock.com/cafes/san-francisco/</a></p><br /><p class="more-info-fineprint">Offer expires Dec 31 2014.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Indigo',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Indigo_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '10% off your<br />entire meal!',
+      info_2: '<p class="more-info-header">Show your subscriber card when you dine at Indigo and <strong>take 10% off</strong> your entire meal!</p><br /><p>687 McAllister St, <br />San Francisco, CA 94102<br />(415) 673-9353</p><br /><p>The agenda was simple: Design a menu offering creative but simple new American cuisine, a comfortable and intimate atmosphere, top notch service without the attitude, and do it all at an affordable price. That is the basic formula behind Indigo Restaurant, the newest addition to San Francisco\'s dining scene. <a href="http://www.indigorestaurant.com/" target="blank">http://www.indigorestaurant.com/</a></p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Pure Envy Spa',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_PureEnvy_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '15% off all services!',
+      info_2: '<p class="more-info-header"><strong>Save 15%</strong> on all services and gift cards at Pure Envy Spa Bar when you present your Subscriber card!</p><br /><p>476 Grove Street<br />San Francisco, CA 94102<br />(415) 255-9911</p><br /><p>Pure Envy Spa Bar came about from our vision to create a charming and sophisticated environment where clients can mingle and get pampered in style. So come on by...relax, renew and let others be green with envy! <a href="http://www.pureenvyspabar.com/" target="blank">http://www.pureenvyspabar.com/</a></p><br /><p class="more-info-fineprint">All services require appointments. Expires Dec 31 2014.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Sailing Fearless',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_SailingFearless_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '$100 off a<br />3-hour cruise!',
+      info_2: '<p class="more-info-header"><strong>Save $100</strong> on a three hour cruise aboard a private yacht for up to six people on San Francisco Bay!</p><br /><p>Your sailing trip with Sailing Fearless will begin from the Presidio Yacht Club, at Cavallo Point. Pickups from other locations on the Bay can be arranged. Call (415) 745.2292 to book!</p><br /><p>Fearless is a 30-foot Cherubini Hunter built in 1978. She can hold six passengers in addition to her crew. There is ample seating in the open as well as an enclosed cabin with a pleasant sound system. Your captain is Stephan Sowash who, with 30 years of sailing experience, is licensed by the US Coast Guard. Captain Sowash holds a 50 ton near Coastal licence with Sailing Endorsement. Fearless is fully insured. <a href="http://sailingfearless.com/" target="blank">http://sailingfearless.com/</a></p><br /><p class="more-info-fineprint">Must mention Subscriber Card at time of booking. 72 hour cancellation is required for a refund. Cruise is subject to availability and weather conditions. Expires Dec 31 2014.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'SF Chamber Orchestra',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_SF-ChamberOrchestra_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '15% off <br />your membership!',
+      info_2: '<p class="more-info-header">Visit <a href="http://www.thesfco.org/support/sfsymphony/" target="blank">www.thesfco.org/sfsymphony</a> to select your SFCO membership and <strong>save 15%</strong>! Password: sfsymphony</p><br /><p>PO Box 191564<br />San Francisco, CA 94119<br />(415) 692-3367</p><br /><p>The San Francisco Chamber Orchestra is dedicated to making classical music accessible to audiences of all ages and backgrounds across the Bay Area by providing fully professional, admission-free concerts and educational programming. The SFCO presents over forty concerts annually in five Bay Area cities with musical offerings for children and families, seasoned concert-goers, and those just discovering the joys of classical music! <a href="http://www.thesfco.org/support/sfsymphony/" target="blank">www.thesfco.org/sfsymphony</a></p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'SFMOMA',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_SF-Moma_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Save 20% on your<br />SF MOMA On the Go<br />membership!',
+      info_2: '<p class="more-info-header">Visit <a href="https://myaccount.sfmoma.org/membership-pages/membership-form---20-discount-promo" target="blank">www.sfmoma.org/symphony</a> to select your SFMOMA On the Go membership and save 20%!</p><br /><p>151 3rd St, <br />San Francisco, CA 94103<br />(415) 357-4000</p><br /><p>SFMOMA is dedicated to making the art of our time a vital and meaningful part of public life. For that reason we assemble unparalleled collections, create exhilarating exhibitions, and develop engaging public programs. While our building is closed for construction, SFMOMA is on the go, presenting an array of new art experiences around the Bay Area and beyond. At the same time, our online offerings, including multimedia, social media, and our blog, create ways to explore modern art and connect with the SFMOMA community no matter where you are. <a href="https://myaccount.sfmoma.org/membership-pages/membership-form---20-discount-promo" target="blank">www.sfmoma.org/symphony</a></p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Sonoma Mag',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Sanoma-Mag_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: '$10 one-year<br/>subscription!',
+      info_2: '<p class="more-info-header">Visit <a href="http://www.sonomamag.com/subscribe" target="_blank">sonomamag.com/subscribe</a> and use promo code <strong>SFS14</strong> to get a $10 one-year subscription to Sonoma magazine!</p><br /><p>Sonoma magazine\'s aim is to capture and celebrate the landscape and lifestyle of the area. The magazine explores the food and wine culture that drives the region, its homes, outdoors, cuisine, personalities, cultural attractions, and style with a fresh, informed voice, a curatorial point of view, and gorgeous visuals. <a href="http://www.sonomamag.com/subscribe" target="_blank">sonomamag.com/subscribe</a></p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Straw',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Straw_TEMP_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Free order of<br />sweet potato tots!',
+      info_2: '<p class="more-info-header">Show your subscriber card when you dine at Straw and receive an order of <strong>sweet potato tots</strong> with any salad, sandwich or entr&eacute;e order!</p><br /><p>203 Octavia Blvd, <br />San Francisco, CA 94102<br />(415) 431-3663</p><br /><p>Straw is a new restaurant in Hayes Valley serving carnival-inspired comfort food. There are accents from your favorite carnival throughout our decor and menu. Oh yeah, and a Tilt-o-Whirl booth. <a href="http://strawsf.com/" target="blank">http://strawsf.com/</a></p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Studiomix',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Studiomix_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Save 40% on your<br />gym membership!',
+      info_2: '<p class="more-info-header"><strong>$99</strong> for a one month membership to Studiomix, with full club amenities and 100+ class options!</p><br /><p><a href="http://www.studiomix.com/">http://www.studiomix.com/</a><br />1000 Van Ness Ave,<br />San Francisco, CA 94109<br />(415) 926-6790</p><br /><p>Studiomix is an all-inclusive, new local gym in the heart of San Francisco blocks from the SF Symphony. With 100+ classes a week (everything from yoga, pilates, barre, and dance to boxing, bootcamps, cycling, TRX, rock climbing, strength conditioning and so many more), cardio & weight machines, showers, towel & locker service, steam & sauna, complimentary wifi, massage & bodywork, nutrition coaching, personal training, and an onsite cafe, there is surely something to get you moving! To take advantage of one of this special offer or for more information please call 415-926-6790 or email: <a href="mailto:workout@studiomix.com">workout@studiomix.com</a></p><br /><p class="more-info-fineprint">Valid for first time members only, limit one per person.</p>',
+          newItem: false
+    },
+    {
+      itemNumber: 'Urbansitter',
+      logoImage: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Content-Images/SStore_Urbansitter_200x200.jpg',
+      squareColor: 'rgba(37,154,207, .93)',
+      info_1: 'Book your first<br />babysitter for free!',
+      info_2: '<p class="more-info-header">Need a babysitter? Book your first babysitter for free!* Visit <a href="https://www.urbansitter.com/promo/sfsymphony" target="_blank">UrbanSitter</a> and enter code <strong>SFSYMPHONY15</strong></p><br /><p>UrbanSitter was started by three busy moms, who were looking for a faster, more personal way to find babysitters and nannies. Since parents most commonly look to friends for recommendations, UrbanSitter shows you babysitters rated & reviewed by parents you know. An online booking system makes it a snap to schedule jobs&mdash;just search by date & time, select a sitter and book with just a click&mdash;it\'s quick, easy, and efficient. <a href="https://www.urbansitter.com/promo/sfsymphony" target="blank">www.urbansitter.com/promo/sfsymphony</a></p><br /><p class="more-info-fineprint">*Subject to UrbanSitter, Inc.\'s Terms of Service. First-time customers only. $15 credit may be used toward Sitter Introduction fee or Premium membership purchase. Not valid for babysitting fees. Recipient must become a registered user of UrbanSitter with valid credit card on file to redeem offer. Restrictions include sitter availability and service to requested location (not all areas served). UrbanSitter reserves the right to modify these terms. Must redeem by Dec 31 2014.</p>',
+          newItem: false
+    }
+  ];
+
+//more arrays for item filter
+  var ssItems_newDeals = [];
+  var ssItems_oldDeals = [];
+
+  //is item new?
+  function newItemLabel(item) {
+    if (ssItems_all[item].newItem) {
+    return "new-item";
+    }
+    else {
+    return "";
+    }
+  }
+
+  //----------------HTML MAKERS---------vv
+  // item maker
+  function makeItem(i, itemArray) {
+    return '\
+  <div class="behindItem">\
+  <div class="item '+newItemLabel(i)+' spinImage" id="ssItem_'+(i+1)+'"\
+    style="background: url('+ itemArray[i].logoImage +');">\
+  <div class="itemOverlay" onclick="moreItemInfo('+i+')"\
+    style="background-color: '+ itemArray[i].squareColor +';">\
+  <div class="itemInfoContainer">\
+  <div class="itemInfo">'+ itemArray[i].info_1 +'</div>\
+  <div class="learn-more-text">learn more</div>\
+  <div class="info-arrow"></div>\
+  </div></div></div></div>';
+  }
+
+  // more info maker
+  function makeMoreInfo(j, itemArray) {
+    return '\
+  <div class="moreInfoDiv zeroHeight" id="moreInfo_'+(j+1)+'">\
+  <div onclick="closeItemInfo()" class="xCloseInfo"></div>\
+  <div class="moreInfoText" id="infoText_'+(j+1)+'">' + itemArray[j].info_2 + '</div>\
+  </div>';
+  }
+
+  function addSpacer() {
+    ssItemsStringHolder.push('<div class="spacerContainer"></div>');
+  }
+  //--------------end html makers-------^^
+
+  //variables
+  var itemContainer = document.getElementById('itemContainer');
+  var ssItemsLength = 0;
+  var ssItemsStringHolder = [];
+  var all_ssItems = '';
+  var j = 0;
+
+  //new deals array maker
+  function getNewDealItems(ssItems_all) {
+    for(i = 0; i < ssItems_all.length; i++) {
+    if(ssItems_all[i].newItem) {
+      ssItems_newDeals.push(ssItems_all[i]);
+    }
+    }
+  }
+
+  //old deal array maker
+  function getOldDealItems(ssItems_all) {
+    for(i = 0; i < ssItems_all.length; i++) {
+    if(!ssItems_all[i].newItem) {
+      ssItems_oldDeals.push(ssItems_all[i]);
+    }
+    }
+  }
+
+  //make new and old deal items arrays
+  getNewDealItems(ssItems_all);
+  getOldDealItems(ssItems_all);
+
+  //calculate length of array being used
+  function numberOfItems(itemArray) {
+    return itemArray.length;
+  }
+
+  //CREATE ITEM LIST FUNCTIONS-----vv
+  //function for handling html strings
+  function joinSsItemsAndPut() {
+    all_ssItems = '';
+    all_ssItems = ssItemsStringHolder.join("");
+    itemContainer.innerHTML = all_ssItems;
+  }
+
+  //sequencing HTML
+  function addInfosAndSpacer(itemArray) {
+    for (x = 0; x < 3; x++) {
+    ssItemsStringHolder.push(makeMoreInfo(j, itemArray));
+    if (j === (ssItemsLength-1)) {
+      break;
+    }
+    j++;
+    }
+    addSpacer();
+  }
+
+  function placeMoreInfo(itemArray) {
+    if ( (i+1) % 3 === 0 ) {
+    addInfosAndSpacer(itemArray);
+    }
+  }
+
+  //SPIN STUFF HERE----------------vv
+  function spinImage(i) {
+    $('#ssItem_'+(i+1)).removeClass("spinImage");
+  }
+
+  function cascadeSpinItems(i, waitTime) {
+    window.setTimeout(function() {
+    spinImage(i);
+    }, waitTime);
+  }
+
+  function spinAllImages() {
+    var spinWaitTime = 400;
+    for (i = 0; i < ssItemsLength ; i++) {
+    cascadeSpinItems(i, spinWaitTime);
+    spinWaitTime += 40;
+    }
+  }
+
+  //--NEW ITEM STUFF HERE--//
+  function newItemStuff() {
+    //add itemOverlay start position class
+    $('.item').children('.itemOverlay').addClass("item-startPos");
+
+    //add alternate itemOverlay start position class for "new" items (not using ATM)
+    /*$('.new-item').children('.itemOverlay')
+    .removeClass("item-startPos").addClass("new-itemStartPos"); */
+
+    //add "new" text to new items
+    $('.new-item').prepend("<div class=\"new-itemLabel\"><span class=\"new-itemLabel-text\">new</span></div>");
+  }
+
+  //----MAIN ITEM FUNCTION----vv
+  //sequence items and put to page---------vv
+  function sequenceItems(itemArray) {
+
+    //initialize variables
+    ssItemsLength = 0;
+    j = 0; //separate counter
+    ssItemsStringHolder = [];
+
+    ssItemsLength = numberOfItems(itemArray);
+
+    for (i = 0; i < ssItemsLength ; i++) {
+    ssItemsStringHolder.push(makeItem(i, itemArray));
+    placeMoreInfo(itemArray);
+    }
+    //non-multiple of 3 moreinfo exception here
+    if (ssItemsLength % 3 !== 0) {
+    addInfosAndSpacer(itemArray);
+    }
+
+    joinSsItemsAndPut();
+    newItemStuff();
+    spinAllImages();
+  }
+
+  //show all items on pageload
+  sequenceItems(ssItems_all);
+
+  // button onclick functions
+  //(replace this with jquery .click) .. maybe not..
+  function showMoreInfo(itemNum) {
+    for (i = 0; i < ssItemsLength ; i++) {
+    if (itemNum === i && $('#moreInfo_'+(i+1)).hasClass("zeroHeight")) {
+      $('#moreInfo_'+(i+1)).removeClass("zeroHeight");
+      break;
+    }
+    else if (itemNum === i) {
+      $('#moreInfo_'+(i+1)).addClass("zeroHeight");
+    }
+    }
+  }
+
+  function hideNotClickedInfo(itemNum) {
+    for (i = 0; i < ssItemsLength ; i++) {
+    if(itemNum !== i) {
+      $('#moreInfo_'+(i+1)).addClass("zeroHeight");
+    }
+    }
+  }
+
+  // more info button onclick MAIN FUNCTION //
+  function moreItemInfo(itemNum) {
+    showMoreInfo(itemNum);
+    hideNotClickedInfo(itemNum);
+  }
+
+  // "x to close" not used at the moment
+  function closeItemInfo() {
+    $('.moreInfoDiv').addClass("zeroHeight");
+    $('.itemOverlay').removeClass('itemSlide');
+    $('.itemOverlay').removeClass('keepSlide');
+  }
+
+  //square slide
+  $(document.body)
+  .on('mouseenter', ".item", function() {
+    $(this).children('.itemOverlay').addClass('itemSlide');
+
+  })
+  .on('mouseleave', ".item", function() {
+    $(this).children('.itemOverlay').removeClass('itemSlide');
+  });
+
+  //when itemOverlay clicked
+  $(document.body).on('click', ".itemOverlay", function() {
+    $(this).toggleClass('keepSlide'); //keep item open
+
+    //flip arrow
+    $(this).find('.info-arrow').css({ transformOrigin: '0 7px' })
+    .transition({ rotateX: '+=180deg' });
+
+    //closes items not clicked and initializes rotation of arrows
+    $(".itemOverlay").not(this).removeClass('keepSlide itemSlide');
+    $(".itemOverlay").not(this).find('.info-arrow').transition({rotateX: '0deg'});
+  });
+
+  $('.filterButton').click(function() {
+    $(this).addClass("filterButton-selected");
+    $('.filterButton').not(this).removeClass("filterButton-selected");
+  });
+
+</script>
+</body>
+</html>
