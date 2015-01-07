@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<meta name="robots" content="noindex">
+<html>
+  <head>
+    <link rel="stylesheet" href="http://hsadler.github.io/my-projects/my-proj_css.css">
+    <script src="http://jashkenas.github.io/underscore/underscore-min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <meta name="description" content="SFS Marketing Images" />
+    <meta charset="utf-8">
+    <title>SFS Marketing Images</title>
+  <style id="jsbin-css">
+body {
+  font-size: 1.2em;
+  font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+  color:white;
+  background-image: url("http://subtlepatterns.com/patterns/black_linen_v2.png");
+}
+
+h1 {
+  display: block;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.hsImagesContainer {
+  max-width: 1149px;
+  margin: 20px auto 50px auto;
+}
+
+img {
+  display: block;
+  margin: 30px auto;
+}
+</style>
+</head>
+
+  <body>
+
+    <div class="backToMainPage">
+      <a href="http://hsadler.github.io/my-projects/index">back</a>
+    </div>
+
+    <h1>Harry's marketing image examples</h1>
+
+    <div class='hsImagesContainer'></div>
+
+  <script id="jsbin-javascript">
+var hsImages = [
+  'https://lh3.googleusercontent.com/mg51jzvhgx0CJ82ZAmz2ne28LqSTFW6CIGKYMuteUEcfnmpFsdEpq0tV_OFeM4UrkTvm2_uAkq8=w1896-h835',
+  'https://lh4.googleusercontent.com/RerPS7TgOLpbsGBidvF0pGO4Orn5_Ys2IJjp9iDlmZsy7arksqXZLj6rMSj_aZ_PJ7wUylZAMuA=w1896-h835',
+  'https://lh6.googleusercontent.com/X_XZwoKpaD-EAP8bB0V5pSg95rX8oLbezoh1vZ-QFP94KK7ALLaUJPSaBTYS30bzb4AExWhEJ-I=w1896-h835',
+  'https://lh3.googleusercontent.com/G2VpE5JR7N9-TEfBONk2XVaqlQ9sbsO_551yny25fFmMG4kBSwXgwSc9xWrcH3NH0CEInurcUUw=w1896-h835',
+  'https://lh3.googleusercontent.com/z5Lo6EffeSxyOlqCWWa0xIUf95L4H2AsFnM3MY7UiCrtU7JJpbzdqByGWtF4I4nFJ8ngwWRv6A0=w1896-h835',
+  'https://lh4.googleusercontent.com/2bnnYxtcdQ8QngMjctdS1YALedLGgPJLUfJIHWnYP7KemHUcx_OlG1nkU_DGQJdUK7LRtK_KEEs=w1896-h835',
+  'https://lh4.googleusercontent.com/bw9ZPAavTIpV_2wK3RZuOu3_RjCh9IubY-6ZViZ7ROC0ruxiDpo5N4WuIf2lG3xvR5MYhVpbgG8=w1896-h835',
+  'https://lh5.googleusercontent.com/KqUIyxi5fl2L1UwhOsXbj34EHimcH1Gypx2kM_vhvEabO70MuXsgXaWaXob5smZBOxD85c6mE_c=w1896-h835',
+  'https://lh5.googleusercontent.com/xDnghLnT_AACdZha8ZU6qlGlUpa_ft1lGZiVgsrF0muVo4cjkwImApUJXlB8F4iInG_1eevAEEc=w1896-h835',
+  'https://lh3.googleusercontent.com/qPkhdCDpBLEJyfmAtITRUjBZWlJIzzsHpOTOd-Z_XCHoHObk4KejAE2LVExCDMJamUfDJwPB_zY=w1896-h835',
+  'https://lh3.googleusercontent.com/qbZ2uEe98lMJ8V4bj1fwFaBAMUBveKLAFTFKThFx5euwuyzSOC7NOmIcOHe8B1MpZDi2NeHffJM=w1896-h835',
+  'https://lh4.googleusercontent.com/Mh9IZg1qaB0BSYCQTDxgUczPNo-WVt-VUwJY5OYE_nP8hmfUNHhP9VOUbk1Hi3kxcjhB1-leapU=w1896-h835',
+  'https://lh6.googleusercontent.com/m2ORr31tRKELq5dXQvUUUIxYn0_B8z3xJkZeQCZJ-25xRRzVWq4rPZP73r3l_KWyPT8Bc_hAtj4=w1896-h835',
+  'https://lh3.googleusercontent.com/btp9YJ6ob-rJauzXY-A112BZONqDJeR2wDnNRmSfBIaaxnDOBci74UtesFB3VzsO29NlOu94yJc',
+  'https://lh6.googleusercontent.com/1ZMZMw0Ba3DW1FwwAClWvAw7Fv8hI2OOjx1dCll7p2C2xwy4Mb2KEojUmfM6J9OGfq67xGewEqI=w1896-h835',
+  'https://lh3.googleusercontent.com/PEwIQGjHedgpibZEjS-gw3XS683cjVqLH6DpBYVZyRJClcxN6vfhgYxwa0DO6o2LF_zEjuWWKwY=w1896-h835',
+  'https://lh4.googleusercontent.com/rNQStUJ-Ak4V4FW8reC6v5amNMJIBpIZbr143wbnmjZFzOl3hEudnJcPiFrwxKoB3O2UFerqiUw=w1896-h835',
+  'https://lh5.googleusercontent.com/yVZm70VYnCalZucGxA2sKnUAgMMtjBuYFV-r4yVCbesjGz-tVFYoWqkul2fRjXU6-RJnQm9g-cg=w1896-h835'
+];
+
+var imgHtmlStrings = _.map(hsImages, function(imageURL) {
+  return '<img src="' + imageURL + '">';
+});
+
+$('.hsImagesContainer').html(imgHtmlStrings.join(''));
+
+</script>
+</body>
+
+</html>

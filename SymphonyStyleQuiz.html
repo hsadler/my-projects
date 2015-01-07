@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="description" content="SF Symphony Style Quiz" />
+    <link rel="stylesheet" href="http://hsadler.github.io/my-projects/my-proj_css.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <script src="http://jashkenas.github.io/underscore/underscore-min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <meta charset="utf-8">
+    <title>SF Symphony Style Quiz</title>
+  <style id="jsbin-css">
+{border: 1px dotted red}
+
+/* GENERAL CSS */
+
+#quizMainContainer {
+  height: 730px;
+  width: 690px;
+  margin: 20px auto;
+}
+
+.quizTextMiddle {
+  position: relative;
+  top: 100px;
+  height: 100px;
+  text-align: center;
+  padding: 0 100px 0 100px;
+}
+
+/* this holds the points */
+.quizTextMiddle2 {
+  position: absolute;
+  top: 20px;
+  font-size: 10px;
+  height: 140px;
+  width: 690px;
+  text-align: center;
+  margin: 0 auto 0 auto;
+}
+
+.startButtonContainer {
+  position: relative;
+  top: 170px;
+  height: 140px;
+  text-align:center;
+  padding: 0 60px 0 60px;
+}
+
+.quizRestartButton {
+  top: 50px;
+}
+
+.quizRestartButton2 {
+  top: 60px;
+  text-decoration:underline;
+}
+
+.questionImagesContainer {
+  width: 690px;
+  height: 220px;
+  position: relative;
+  margin: 0 auto 0 auto;
+  top: 0;
+  text-align:center;
+}
+
+.questionTextContainer {
+  position: inline-block;
+  top: 60px;
+  height: 30px;
+  text-align: center;
+  padding: 0 100px 0 100px;
+  margin: 30px 0 30px 0;
+}
+
+.qText {
+  display: inline-block;
+  max-width:400px;
+}
+
+.bigNumberDiv {
+  width: 60px;
+  height:60px;
+  position: absolute;
+  text-align:left;
+}
+
+.bigNumber {
+  position: absolute;
+  font:28px arial;
+  font-weight: initial;
+  margin: 0;
+  top: -12px;
+}
+
+.answersContainer {
+  position: inline-block;
+  top: 45px;
+  height: auto;
+  text-align:center;
+  padding: 0;
+}
+
+.quizNavigationContainer {
+  position: absolute;
+  width: 300px;
+  left: 220px;
+  top: 690px;
+}
+
+/* IMAGE CSS */
+.qImage{
+  width: 680px;
+  height: 220px;
+}
+.imageMTT {
+  background: url('http://i.imgur.com/JnsDFGy.jpg')
+}
+.imageBasses {
+  background: url('http://i.imgur.com/Iljj8lF.jpg')
+}
+.imageMutter {
+  background: url('http://i.imgur.com/u3beV56.jpg')
+}
+.imageMcFerrin {
+  background: url('http://i.imgur.com/35js0TJ.jpg')
+}
+.imageApplause {
+  background: url('http://i.imgur.com/2zcHmqk.jpg')
+}
+
+.imageAnswer {
+  margin: 0 5px 4px 5px;
+  width: 200px;
+  height: 200px;
+}
+
+/* BUTTON CSS */
+.button-initialize,
+.button-answer,
+.button-navigation,
+.button-submit,
+.button-cyo {
+  border-radius: 2px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin: 7px 7px 7px 7px;
+  width: 165px;
+}
+
+.button-initialize {
+  background: rgb(60, 180, 215);
+  color: white;
+  border-radius: 4px;
+  margin: 0;
+}
+
+#restartLink {
+  font-size: 12px;
+  text-align: center;
+  width: 120px;
+  height: 22px;
+  margin: 0 auto 0 auto;
+  position: relative;
+  cursor:pointer;
+}
+
+.button-answer {
+  background: rgb(60, 180, 215);
+  color: white;
+  margin: 4px 7px 12px 7px;
+}
+
+.button-navigation {
+  background: rgb(222,222,222);
+  border: 1px solid rgb(210,210,210);
+  width: 100px;
+  font-weight: bold;
+  font-size: 15px;
+  text-transform:uppercase;
+}
+
+.button-cyo {
+  border-radius: 0;
+  background: #288dcb;
+  font-size: 20px;
+  color: white;
+  font-weight:bold;
+  height: 36px;
+  width: 330px;
+  padding: 10px 0 0 0;
+  margin: 0;
+}
+
+
+.button-leanMore {
+  border-radius: 0;
+  background: rgb(159,32,38);
+  width: auto;
+  height: auto;
+  font-size: 9px;
+  letter-spacing:1px;
+  color: white;
+  margin: auto;
+}
+
+/* EVENT RESULTS CSS */
+#resultsHeader {
+  text-align: center;
+  margin: 40px 0 0 0;
+}
+
+#resultsSubhead {
+  text-align: center;
+}
+
+.eventResults {
+  position: relative;
+  margin: 0 auto 0 auto;
+  top: 10px;
+  height: 180px;
+  text-align: center;
+}
+
+.eventResults th, .eventResults td {
+  padding:10px;
+  height: 50px;
+  max-width: 202px;
+}
+
+.eventResultsImages td {
+  width: 180px;
+  height: 130px;
+}
+
+.eventResultsImages img {
+  width: 185px;
+}
+
+.eventResultsTitles td {
+  height: 40px;
+  font-size: 16px;
+}
+
+.eventResultsDates td {
+  height: 22px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.eventResultsLearnMore td {
+  height: 35px;
+}
+
+.eventResultsTitles, .eventResultsDates {
+  vertical-align: text-top;
+}
+
+#restartLink {
+  font-size: 12px;
+  text-align: center;
+  width: 120px;
+  height: 22px;
+  margin: 0 auto 0 auto;
+  position: relative;
+  cursor:pointer;
+}
+
+#resultsText {
+  top:40px;
+}
+
+.songsTable {
+  margin: 0 auto 0 auto;
+}
+
+.songsTable td {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto 0 auto;
+}
+
+.songName {
+  width: 300px;
+  height: 40px;
+  line-height:125%;
+  margin: 0 auto 3px auto;
+  padding: 0px;
+}
+.songName span {
+  font-size: 14px;
+}
+
+/* UTILITY CSS */
+.hide {
+  display:none;
+}
+
+.darkerBlue {
+  background: #25798c;
+}
+
+.add_margin_top {
+  margin-top: 30px;
+}
+
+.add_small_margin_top {
+  margin-top: 15px;
+}
+
+
+
+</style>
+</head>
+  <body>
+
+    <div class="backToMainPage">
+      <a href="http://hsadler.github.io/my-projects/index">back</a>
+    </div>
+
+    <div id="quizMainContainer">
+
+      <!--Start Page-->
+      <div class="questionWrap" id="startPage">
+
+        <div class="quizTextMiddle" id="startQuizContainer">
+          <h2>Take this handy quiz to find out your Symphony style!</h2>
+          <p>We'll help you pick out<br>concerts you'll love</p>
+        </div>
+
+        <div class="startButtonContainer">
+          <a class="pure-button button-initialize quizRestartButton" id="startButton"> GET STARTED </a>
+        </div>
+
+      </div>
+
+      <!--QUESTION #1-->
+      <div class="questionWrap hide" id="question1">
+        <div class="questionImagesContainer imageMTT hide" id="questionImagesContainer">
+        </div>
+
+        <div class="questionTextContainer" id="questionTextContainer1">
+          <div class="bigNumberDiv">
+            <span class="bigNumber">1.</span>
+          </div>
+          <span class="qText">
+            Which of these works of art do you like?
+          </span>
+        </div>
+
+        <div class="answersContainer" id="answersContainer1">
+
+          <img class="imageAnswer" src="http://i.imgur.com/o26nL7j.jpg"/>
+          <img class="imageAnswer" src="http://i.imgur.com/WBK4U7f.jpg"/>
+          <img class="imageAnswer" src="http://i.imgur.com/68gyrIC.jpg"/>
+
+          <a class="pure-button button-answer" id="answer1A" href="#" data-attr="americanStory">
+            A
+          </a>
+
+          <a class="pure-button button-answer" id="answer1B" href="#" data-attr="piano">
+            B
+          </a>
+
+          <a class="pure-button button-answer" id="answer1C" href="#" data-attr="international">
+            C
+          </a>
+
+          <img class="imageAnswer add_margin_top" src="http://i.imgur.com/xG348dt.jpg"/>
+          <img class="imageAnswer add_margin_top" src="http://i.imgur.com/0A2qd8F.jpg"/>
+          <img class="imageAnswer add_margin_top" src="http://i.imgur.com/dzOif4h.jpg"/>
+
+          <a class="pure-button button-answer" id="answer1D" href="#" data-attr="youngStars">
+            D
+          </a>
+
+          <a class="pure-button button-answer" id="answer1E" href="#" data-attr="newSoundVisual">
+            E
+          </a>
+
+          <a class="pure-button button-answer" id="answer1F" href="#" data-attr="classics">
+            F
+          </a>
+
+        </div>
+
+      </div>
+
+      <!--QUESTION #2-->
+      <div class="questionWrap hide" id="question2">
+        <div class="questionImagesContainer imageBasses" id="questionImagesContainer">
+        </div>
+
+        <div class="questionTextContainer add_margin_top" id="questionTextContainer2">
+          <div class="bigNumberDiv">
+            <span class="bigNumber">2.</span>
+          </div>
+
+          <span class="qText">
+            What sporting events do you enjoy?
+          </span>
+        </div>
+        <div class="answersContainer" id="answersContainer2">
+
+          <a class="pure-button button-answer" id="answer2A" href="#" data-attr="classics">
+            Football
+          </a>
+
+          <a class="pure-button button-answer" id="answer2B" href="#" data-attr="international">
+            Soccer
+          </a>
+
+          <a class="pure-button button-answer" id="answer2C" href="#" data-attr="storyVisual">
+            Wii Sports
+          </a>
+
+          <a class="pure-button button-answer add_small_margin_top" id="answer2D" href="#" data-attr="pianoYoung">
+            The Olympics
+          </a>
+
+          <a class="pure-button button-answer add_small_margin_top" id="answer2A" href="#" data-attr="american">
+            Baseball
+          </a>
+
+          <a class="pure-button button-answer add_small_margin_top" id="answer2B" href="#" data-attr="newSound">
+            X Games
+          </a>
+
+        </div>
+      </div>
+
+      <!--QUESTION #3-->
+      <div class="questionWrap hide" id="question3">
+        <div class="questionImagesContainer imageMcFerrin" id="questionImagesContainer">
+        </div>
+
+        <div class="questionTextContainer" id="questionTextContainer3">
+          <div class="bigNumberDiv">
+            <span class="bigNumber">3.</span>
+          </div>
+          <span class="qText">
+            Which of these popular songs do you like most?
+          </span>
+        </div>
+
+        <div class="answersContainer" id="answersContainer3">
+
+          <!--songs first column-->
+
+          <table class="songsTable">
+            <tr>
+              <td>
+
+                <div class="songName">
+                  <span><strong>"Happy"</strong><br>
+                    Pharrell Williams</span>
+                </div>
+
+                <a class="pure-button button-answer" id="answer3A" href="#" data-attr="young">
+                  A
+                </a>
+
+                <div class="songName add_small_margin_top">
+                  <span><strong>"Piano Man"</strong><br>
+                    Billy Joel</span>
+                </div>
+
+                <a class="pure-button button-answer" id="answer3C" href="#" data-attr="piano">
+                  C
+                </a>
+
+                <div class="songName add_small_margin_top">
+                  <span><strong>"Thriller"</strong><br>
+                    Michael Jackson</span>
+                </div>
+
+                <a class="pure-button button-answer" id="answer3E" href="#" data-attr="visual">
+                  E
+                </a>
+
+              </td>
+
+              <!--songs second column-->
+              <td>
+
+                <div class="songName">
+                  <span><strong>"Eleanor Rigby"</strong><br>
+                    The Beatles</span>
+                </div>
+
+                <a class="pure-button button-answer" id="answer3B" href="#" data-attr="storyInternational">
+                  B
+                </a>
+
+                <div class="songName add_small_margin_top">
+                  <span><strong>"One More Time"</strong><br>
+                    Daft Punk</span>
+                </div>
+
+                <a class="pure-button button-answer" id="answer3D" href="#" data-attr="newSound">
+                  D
+                </a>
+
+                <div class="songName add_small_margin_top">
+                  <span><strong>"What a Wonderful World"</strong><br>
+                    Louis Armstrong</span>
+                </div>
+
+                <a class="pure-button button-answer" id="answer3F" href="#" data-attr="classicsAmerican">
+                  F
+                </a>
+
+              </td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+
+      <!--QUESTION #4-->
+      <div class="questionWrap hide" id="question4">
+        <div class="questionImagesContainer imageApplause hide" id="questionImagesContainer">
+        </div>
+
+        <div class="questionTextContainer" id="questionTextContainer4">
+          <div class="bigNumberDiv">
+            <span class="bigNumber">4.</span>
+          </div>
+          <span class="qText">
+            Which of these composers have awesome beards or mustaches?
+          </span>
+        </div>
+
+        <div class="answersContainer" id="answersContainer4">
+
+          <img class="imageAnswer" src="http://i.imgur.com/QCrrHXr.jpg"/>
+          <img class="imageAnswer" src="http://i.imgur.com/y5SSsFX.jpg"/>
+          <img class="imageAnswer" src="http://i.imgur.com/CPGPMK6.jpg"/>
+
+          <a class="pure-button button-answer" id="answer4A" href="#" data-attr="americanYoung">
+            A
+          </a>
+
+          <a class="pure-button button-answer" id="answer4B" href="#" data-attr="story">
+            B
+          </a>
+
+          <a class="pure-button button-answer" id="answer4C" href="#" data-attr="newSound">
+            C
+          </a>
+
+          <img class="imageAnswer add_margin_top" src="http://i.imgur.com/exw1xth.jpg"/>
+          <img class="imageAnswer add_margin_top" src="http://i.imgur.com/WIuaMjj.jpg"/>
+          <img class="imageAnswer add_margin_top" src="http://i.imgur.com/Mo9bJtf.jpg"/>
+
+          <a class="pure-button button-answer" id="answer4D" href="#" data-attr="classics">
+            D
+          </a>
+
+          <a class="pure-button button-answer" id="answer4E" href="#" data-attr="pianoInternational">
+            E
+          </a>
+
+          <a class="pure-button button-answer" id="answer4F" href="#" data-attr="visual">
+            F
+          </a>
+
+        </div>
+
+      </div>
+
+      <!--Results Page-->
+      <div class="resultsPage hide" id="resultsPage">
+
+        <!--<div class="quizTextMiddle" id="resultsText">
+<h4>Your Symphony Style is...</h4>
+</div>-->
+
+        <!-- 3 events results -->
+        <h1 id="resultsHeader">Group Title</h1>
+
+        <p id="resultsSubhead">Group Subhead</p>
+
+        <table class="eventResults">
+          <tr class="eventResultsImages">
+            <td>
+              <a class="eventURL_1" target="blank" href="http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx">
+                <img id="imageEvent1" src="http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/B/BeethovenGraphic_583x336.jpg" />
+              </a>
+            </td>
+            <td>
+              <a class="eventURL_2" target="blank" href="http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx">
+                <img id="imageEvent2" src="http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/T/Temirkanov-Y_583x336.jpg" />
+              </a>
+            </td>
+            <td>
+              <a class="eventURL_3" target="blank" href="http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx">
+                <img id="imageEvent3" src="http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Event-Images/Thibaudet-J_3_583x336.jpg" />
+              </a>
+            </td>
+          </tr>
+          <tr class="eventResultsTitles">
+            <td id="titleEvent1">Event Title</td>
+            <td id="titleEvent2">Event Title</td>
+            <td id="titleEvent3">Event Title</td>
+          </tr>
+          <tr class="eventResultsDates">
+            <td id="dateEvent1">Date</td>
+            <td id="dateEvent2">Date</td>
+            <td id="dateEvent3">Date</td>
+          </tr>
+
+          <!--working on learn more buttons here-->
+          <tr class="eventResultsLearnMore">
+            <td id="learnMoreEvent1">
+              <a class="pure-button button-leanMore eventURL_1" target="blank" href="http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx">
+                <div>BUY CONCERT</div>
+              </a>
+            </td>
+            <td id="learnMoreEvent2">
+              <a class="pure-button button-leanMore eventURL_2" target="blank" href="http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx">
+                <div>BUY CONCERT</div>
+              </a>
+            </td>
+            <td id="learnMoreEvent3">
+              <a class="pure-button button-leanMore eventURL_3" target="blank" href="http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx">
+                <div>BUY CONCERT</div>
+              </a>
+            </td>
+          </tr>
+
+        </table>
+        <!--end of first 3 results-->
+
+        <!-- restart button -->
+        <div class="startButtonContainer quizRestartButton">
+          <a class="pure-button button-cyo" id="cyoButton" href="http://www.sfsymphony.org/Buy-Tickets/Subscribe#panel-20152" target="blank">
+            <strong>Get These Concerts and More</strong>
+          </a>
+        </div>
+
+        <!-- restart link button -->
+        <p id="restartLink">
+          <a class="quizRestartButton2" id="quizRestartButton2" >Take the Quiz Again</a>
+        </p>
+
+      </div>
+
+      <!---------------------->
+      <!--NAVIGATION AREA-->
+      <div class="quizNavigationContainer hide" id="quizNavigationContainer">
+
+        <a class="pure-button button-navigation" id="navBack" href="#">
+          <&nbsp;&nbsp; Back
+                        </a>
+
+          <a class="pure-button button-navigation" id="navNext" href="#">
+            Next &nbsp;&nbsp;>
+          </a>
+          <a class="pure-button button-navigation hide" id="navSubmit" href="#">
+            submit
+          </a>
+          </div>
+
+      </div>
+
+
+      <script id="jsbin-javascript">
+// NAVIGATION CODE
+var navState = 0;
+
+// calculates new nav state when back or next is clicked
+function newNavState(currentNavState, direction) {
+  if (direction==="back") {
+    if (currentNavState > 0) {
+      navState--;
+    }
+    else if(currentNavState === 0){
+      navState = 0;
+    }
+  }
+  if (direction==="next") {
+    if (currentNavState < 5) {
+      navState++;
+    }
+    else if(currentNavState === 5){
+      navState = 5;
+    }
+  }
+  return navState;
+}
+
+//show or hide nav buttons
+function displaySubmit() {
+  $('#navNext').addClass('hide');
+  $('#navSubmit').removeClass('hide');
+}
+
+function displayNext() {
+  $('#navSubmit').addClass('hide');
+  $('#navNext').removeClass('hide');
+}
+
+function hideBack() {
+  $('#navBack').addClass('hide');
+}
+
+function showBack() {
+  $('#navBack').removeClass('hide');
+}
+
+// function to display nav update
+function displayNavState(newNavState) {
+  $('.questionWrap, .resultsPage').addClass('hide');
+
+  switch(newNavState) {
+    case 0:
+      $('#startPage').removeClass('hide');
+      $('#quizNavigationContainer').addClass('hide');
+      break;
+    case 1:
+      $('#question1').removeClass('hide');
+      $('#quizNavigationContainer').removeClass('hide');
+      break;
+    case 2:
+      $('#question2').removeClass('hide');
+      break;
+    case 3:
+      $('#question3').removeClass('hide');
+      displayNext();
+      break;
+    case 4:
+      $('#question4').removeClass('hide');
+      displaySubmit();
+      break;
+  }
+}
+
+// nav click functions
+$('#navBack').click(function () {
+  newNavState(navState, "back");
+  displayNavState(navState);
+});
+
+$('#navNext').click(function () {
+  newNavState(navState, "next");
+  displayNavState(navState);
+});
+
+// function to initialize quiz answers
+function initializeAnswers() {
+  $('.button-answer').removeClass('pure-button-active darkerBlue');
+  for (i = 0; i < attrNamesArray.length; i++){
+    $('.button-answer').removeClass(attrNamesArray[i]);
+  }
+}
+
+// start quiz
+$('#startButton, #quizRestartButton, #quizRestartButton2').click(function() {
+  console.log("Quiz has been started!");
+  initializeAnswers();
+  displayNavState(1);
+  navState = 1;
+  displayNext();
+});
+
+// display results page when submitted
+function showResults() {
+  console.log("quiz has been submitted!!!");
+  $('.questionWrap').addClass('hide');
+  $('#quizNavigationContainer').addClass('hide');
+  $('#resultsPage').removeClass('hide');
+}
+
+$('#navSubmit').click(function() {
+  showResults();
+});
+
+//display activation when clicked
+$('.button-answer').click(function (){
+  $(this).toggleClass('pure-button-active');
+  $(this).toggleClass('darkerBlue');
+});
+
+
+// EVENT GROUPS OBJECTS
+var allEventGroups = [
+  {
+    groupTitle: 'A New Soundworld',
+    groupSubhead: 'Consider these concerts for a new take on symphonic music.',
+    groupAttr: ['newSound','newSoundVisual', 'newSoundAmerican'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/B/Bates-M_DJ_583x336.jpg',
+    eventTitle_1: 'Mason Bates\'s <em>Aternative Energy</em>',
+    eventDate_1: 'Sep 10&ndash;13',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/A/Ades_583x336.jpg',
+    eventTitle_2: 'Thomas Adès\'s <em>In Seven Days</em> [with video]',
+    eventDate_2: 'Mar 5&ndash;7',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Ades-Upshaw.aspx',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/MTT/TilsonThomas_583x336.jpg',
+    eventTitle_3: 'Cage\'s <em>Renga</em>',
+    eventDate_3: 'May 16',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/American-Maverick-John-Cage.aspx',
+    eventInfo_3: 'infohere'
+  },
+  {
+    groupTitle: 'Storytellers',
+    groupSubhead: 'Consider these concerts for a season of big drama.',
+    groupAttr: ['story', 'americanStory', 'storyVisual', 'storyInternational'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/Z/Zacharias-C_1415_583x336.jpg',
+    eventTitle_1: 'Copland\'s <em>Appalachian Spring</em>',
+    eventDate_1: 'Oct 22&ndash;24',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Copland%E2%80%99s-Appalachian-Spring',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/MTT/MTT_583x336.jpg',
+    eventTitle_2: 'Stravinsky\'s <em>The Soldier\'s Tale</em>',
+    eventDate_2: 'Jan 16&ndash;18',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/MTT-conducts-The-Soldiers-Tale.aspx',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/G/Gardiner_583x336.jpg',
+    eventTitle_3: 'Monteverdi\'s  <em>L\'Orfeo, favola in musica</em>',
+    eventDate_3: 'Apr 27',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/John-Eliot-Gardiner-Orchestre-Revolutionnaire-et-R.aspx',
+    eventInfo_3: 'infohere'
+  },
+  {
+    groupTitle: 'The American Sound with MTT',
+    groupSubhead: 'Consider these concerts for a star-spangled season with MTT.',
+    groupAttr: ['american','americanStory', 'americanYoung', 'classicsAmerican'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/B/Bates-M_DJ_583x336.jpg',
+    eventTitle_1: 'Mason Bates\'s <em>Aternative Energy</em>',
+    eventDate_1: 'Sep 10&ndash;13',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethoven-Bates-Piano-Concerto-No-1-Alternative-En.aspx',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/MTT/MTT_583x336.jpg',
+    eventTitle_2: 'John Adams\'s <em>Grand Pianola Music</em>',
+    eventDate_2: 'Jan 16&ndash;18',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/MTT-conducts-The-Soldiers-Tale.aspx',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/MTT/TilsonThomas_583x336.jpg',
+    eventTitle_3: 'Bernstein\'s Symphony No. 2, <em>The Age of Anxiety</em>',
+    eventDate_3: 'May 7&ndash;10',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Mahler-Bernstein.aspx',
+    eventInfo_3: 'infohere'
+  },
+  {
+    groupTitle: 'International Orchestras',
+    groupSubhead: 'Include these concerts, et voil&agrave;&mdash;a season of orchestras from across the globe.',
+    groupAttr: ['international', 'pianoInternational', 'storyInternational'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/J/Jurowski-V_1415_583x336.jpg',
+    eventTitle_1: 'Vladimir Jurowski and the London Philharmonic',
+    eventDate_1: 'Oct 12&ndash;13',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/Calendar.aspx#artist=_London Philharmonic Orchestra',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/F/Fischer-I_583x336.jpg',
+    eventTitle_2: 'Iv&aacute;n Fischer and the Budapest Festival Orchestra',
+    eventDate_2: 'Jan 25',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/All-Brahms-with-the-BFO.aspx',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/N/Nezet-Seguin-Y_583x336.jpg',
+    eventTitle_3: 'Yannick Nézet-Séguin and the Rotterdam Philharmonic',
+    eventDate_3: 'Feb 16',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Yannick-Nezet-Seguin-and-the-Rotterdam-Phil-Feb-16.aspx',
+    eventInfo_3: 'infohere'
+  },
+  {
+    groupTitle: 'Piano Lover',
+    groupSubhead: 'Key in these concerts for a season of grand pianists.',
+    groupAttr: ['piano', 'pianoYoung', 'pianoInternational'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/S/Schiff-A_583x336.jpg',
+    eventTitle_1: 'András Schiff',
+    eventDate_1: 'Feb 15, 22',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/Calendar.aspx#artist=András _Schiff',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/W/Wang-Y_583x336.jpg',
+    eventTitle_2: 'Yuja Wang and the London Symphony Orchestra',
+    eventDate_2: 'Mar 22&ndash;23',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/Calendar.aspx#artist=_London Symphony Orchestra',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/T/Thibaudet-J_583x336.jpg',
+    eventTitle_3: 'Jean-Yves Thibaudet',
+    eventDate_3: 'May 7&ndash;10',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Mahler-Bernstein.aspx',
+    eventInfo_3: 'infohere'
+  },
+  {
+    groupTitle: 'The Big Classics',
+    groupSubhead: 'Consider these concerts for a season of classical hits.',
+    groupAttr: ['classics', 'classicsAmerican'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/S/Salonen_583x336.jpg',
+    eventTitle_1: 'Stravinsky\'s <em>The Firebird</em>',
+    eventDate_1: 'Apr 30&ndash;May 3',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Salonen-conducts-The-Firebird.aspx',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/C/Chorus_583x336.jpg',
+    eventTitle_2: 'Orff\'s <em>Carmina burana</em>',
+    eventDate_2: 'May 17',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/San-Francisco-Symphony-Chorus-Concert.aspx',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/MTT/TilsonThomas_583x336.jpg',
+    eventTitle_3: 'Beethoven\'s Fifth Symphony',
+    eventDate_3: 'Jun 27',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethovens-Fifth-Symphony-Jun-27.aspx',
+    eventInfo_3: 'infohere'
+  },
+  {
+    groupTitle: 'Bright Young Stars',
+    groupSubhead: 'Consider these concerts for a season brimming with young talent.',
+    groupAttr: ['young', 'youngStars', 'pianoYoung', 'americanYoung'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/W/Wang-Y_583x336.jpg',
+    eventTitle_1: 'Yuja Wang',
+    eventDate_1: 'Mar 22&ndash;23',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/MTT-London-Symphony-Mar-22.aspx',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/C/SaChen_583x336.jpg',
+    eventTitle_2: 'Sa Chen',
+    eventDate_2: 'Apr 23&ndash;24',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Rachmaninoffs-Second-Concerto.aspx',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/J/Jansen-J_583x336.jpg',
+    eventTitle_3: 'Janine Jansen',
+    eventDate_3: 'May 14&ndash;15',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Janine-Jansen-plays-Mendelssohns-Violin-Concerto.aspx',
+    eventInfo_3: 'infohere'
+  },
+  {
+    groupTitle: 'The Visual Twist',
+    groupSubhead: 'Video, staging, costumes&mdash;consider these traditional concerts, reimagined.',
+    groupAttr: ['visual','newSoundVisual', 'storyVisual'],
+    groupScore: 0,
+
+    eventImage_1: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/A/Ades_583x336.jpg',
+    eventTitle_1: 'Adès and Upshaw',
+    eventDate_1: 'Mar 5&ndash;7',
+    eventURL_1: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Ades-Upshaw.aspx',
+    eventInfo_1: 'infohere',
+
+    eventImage_2: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/MTT/TilsonThomas_583x336.jpg',
+    eventTitle_2: 'American Maverick: John Cage',
+    eventDate_2: 'May 16',
+    eventURL_2: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/American-Maverick-John-Cage.aspx',
+    eventInfo_2: 'infohere',
+
+    eventImage_3: 'http://www.sfsymphony.org/SanFranciscoSymphony/media/Library/Artist-Images/H/Harvey-J_583x336.jpg',
+    eventTitle_3: 'Beethoven\'s <em>Missa solemnis</em>',
+    eventDate_3: 'Jun 10&ndash;13',
+    eventURL_3: 'http://www.sfsymphony.org/Buy-Tickets/2014-2015/Beethovens-Missa-solemnis.aspx',
+    eventInfo_3: 'infohere'
+  }
+];
+
+var lengthAllEventGroups = allEventGroups.length; // for iterating through allEventGroups
+
+//shuffle array method added to Array prototype
+// shuffle with myArrayHere.shuffle();
+Array.prototype.shuffle = function (){
+    var i = this.length, j, temp;
+    if ( i === 0 ) return;
+    while ( --i ) {
+        j = Math.floor( Math.random() * ( i + 1 ) );
+        temp = this[i];
+        this[i] = this[j];
+        this[j] = temp;
+    }
+};
+
+
+// CALCULATE POINTS FOR ATTRIBUTES
+
+// store attributes
+var attrNamesArray = [
+  'young',
+  'newSound',
+  'story',
+  'american',
+  'international',
+  'piano',
+  'classics',
+  'youngStars',
+  'visual',
+  'newSoundVisual',
+  'americanStory',
+  'pianoYoung',
+  'storyVisual',
+  'storyInternational',
+  'americanYoung',
+  'pianoInternational',
+  'classicsAmerican'
+];
+
+var lengthAttrArray = attrNamesArray.length; // for iterating through attrNamesArray
+
+var attributes = {};
+
+function initializeAttributes () {
+  for (i = 0; i < lengthAttrArray; i++) {
+    var attrParam = attrNamesArray[i];
+    attributes[attrParam] = 0;
+  }
+}
+
+initializeAttributes();
+
+// toggle attribute class on answer click
+$('.button-answer').click(function() {
+  var buttonAttr = $(this).data("attr");
+  $(this).toggleClass(buttonAttr);
+});
+
+//count instances of classes and assigning to attribute parameters
+$('#navSubmit').click(function() {
+  for (i = 0; i < lengthAttrArray; i++) {
+    var attrName = attrNamesArray[i];
+    attributes[attrName] = $("a." + attrName + "").length;
+  }
+});
+
+
+// CALCULATE EVENT RANKING
+
+var iterations = 0; // counter of loops
+
+// calculate attribute points (this will apply to event ranking)
+// TODO: can this looping be coded better to achieve less loops?
+function sumAttributes(attr, attrScore) {
+  for (i = 0; i < lengthAllEventGroups; i++) {
+    iterations++ ;
+    for(u = 0; u < allEventGroups[i].groupAttr.length; u++) {
+      iterations++ ;
+      if(attr === allEventGroups[i].groupAttr[u]) {
+        allEventGroups[i].groupScore += attrScore;
+		}
+      else {
+      }
+    }
+  }
+}
+
+// log scores
+function logScores() {
+  for (i = 0; i < allEventGroups.length; i++) {
+    console.log(allEventGroups[i].groupTitle + " has score: " + allEventGroups[i].groupScore);
+  }
+  console.log("\n");
+}
+
+// assign attr score to event scores
+function assignGroupScores() {
+  // TODO: need new code to iterate through attributes and have a list of attributes
+  // looping through attributes list makes browser hang
+  sumAttributes('young', attributes.young);
+  sumAttributes('newSound', attributes.newSound);
+  sumAttributes('story', attributes.story);
+  sumAttributes('american', attributes.american);
+  sumAttributes('international', attributes.international);
+  sumAttributes('piano', attributes.piano);
+  sumAttributes('classics', attributes.classics);
+  sumAttributes('youngStars', attributes.youngStars);
+  sumAttributes('visual', attributes.visual);
+  sumAttributes('newSoundVisual', attributes.newSoundVisual);
+  sumAttributes('americanStory', attributes.americanStory);
+  sumAttributes('pianoYoung', attributes.pianoYoung);
+  sumAttributes('storyVisual', attributes.storyVisual);
+  sumAttributes('storyInternational', attributes.storyInternational);
+  sumAttributes('americanYoung', attributes.americanYoung);
+  sumAttributes('pianoInternational', attributes.pianoInternational);
+
+  console.log(iterations + " number of loops performed");
+}
+
+// initialize scores
+function initializeEventScores() {
+  for (i = 0; i < allEventGroups.length; i++) {
+    allEventGroups[i].groupScore = 0;
+  }
+}
+
+// RANK EVENTS IN NEW ARRAY
+var eventsResults = [];
+
+// function: push to eventsResults array from high score to low
+function rankEventsResultsArray() {
+  for(i = 10; i > -1; i--){
+    for (y = 0; y < allEventGroups.length; y++) {
+      if (allEventGroups[y].groupScore === i){
+        eventsResults.push(allEventGroups[y]);
+      }
+    }
+  }
+  console.log(eventsResults);
+}
+
+
+// DISPLAY RANKING TO PAGE
+
+// function: use ranked array to display results
+function eventResultsDispay() {
+  // header and subhead
+  $('#resultsHeader').html(eventsResults[0].groupTitle);
+  $('#resultsSubhead').html(eventsResults[0].groupSubhead);
+  //images
+  $('#imageEvent1').attr('src', eventsResults[0].eventImage_1);
+  $('#imageEvent2').attr('src', eventsResults[0].eventImage_2);
+  $('#imageEvent3').attr('src', eventsResults[0].eventImage_3);
+  //event links for images and dates
+  $('.eventURL_1').attr('href', eventsResults[0].eventURL_1);
+  $('.eventURL_2').attr('href', eventsResults[0].eventURL_2);
+  $('.eventURL_3').attr('href', eventsResults[0].eventURL_3);
+  //titles
+  $('#titleEvent1').html(eventsResults[0].eventTitle_1);
+  $('#titleEvent2').html(eventsResults[0].eventTitle_2);
+  $('#titleEvent3').html(eventsResults[0].eventTitle_3);
+  //dates
+  $('#dateEvent1').html(eventsResults[0].eventDate_1);
+  $('#dateEvent2').html(eventsResults[0].eventDate_2);
+  $('#dateEvent3').html(eventsResults[0].eventDate_3);
+}
+
+
+// SUBMISSION CODE
+
+// do the scoring on submittion (should stay same with changes, check though)
+$('#navSubmit').click(function() {
+  assignGroupScores();
+  logScores();
+  rankEventsResultsArray();
+  eventResultsDispay();
+});
+
+//restart initializes event scores
+$('#startButton, #quizRestartButton2').click(function() {
+  initializeEventScores();
+  initializeAttributes();
+  // radomizes initial allEvents array
+  allEventGroups.shuffle();
+  //initializes eventsResults array..
+  eventsResults = [];
+  // initialize loop counter..
+  iterations = 0;
+  logScores();
+});
+</script>
+</body>
+</html>
