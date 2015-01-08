@@ -11,16 +11,23 @@
   <style id="jsbin-css">
 body {
   font-size: 1.2em;
-  font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+  font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
   color:white;
   background-image: url("http://subtlepatterns.com/patterns/black_linen_v2.png");
 }
 
-h1 {
+h1, p {
   display: block;
+  text-align: center;
+}
+
+h1 {
   margin-top: 60px;
   margin-bottom: 40px;
-  text-align: center;
+}
+
+p {
+  margin-top: 60px;
 }
 
 .hsImagesContainer {
@@ -30,48 +37,104 @@ h1 {
 
 img {
   display: block;
-  margin: 30px auto;
+  margin: 30px auto 70px auto;
 }
+
+
 </style>
 </head>
 
   <body>
-
     <div class="backToMainPage">
       <a href="http://hsadler.github.io/my-projects/index">back</a>
     </div>
 
     <h1>Harry's marketing image examples</h1>
 
-    <div class='hsImagesContainer'></div>
-
+    <p>Website front page images</p>
+    <div class='bowsContainer'></div>
+    <p>Postcard style emails</p>
+    <div class='emailsContainer'></div>
+    <p>Animated web ads</p>
+    <div class='animAdsContainer'></div>
+    <p>Mobile app splash image</p>
+    <div class='mttSplashContainer'></div>
+    <p>Pencil dropdown web ads</p>
+    <div class='pencilAdsContainer'></div>
+    <p>Regular web ads</p>
+    <div class='regAdsContainer'></div>
+    <p>Joke ads</p>
+    <div class='jokeAdsContainer'></div>
   <script id="jsbin-javascript">
-var hsImages = [
-  'https://lh3.googleusercontent.com/mg51jzvhgx0CJ82ZAmz2ne28LqSTFW6CIGKYMuteUEcfnmpFsdEpq0tV_OFeM4UrkTvm2_uAkq8=w1896-h835',
-  'https://lh4.googleusercontent.com/RerPS7TgOLpbsGBidvF0pGO4Orn5_Ys2IJjp9iDlmZsy7arksqXZLj6rMSj_aZ_PJ7wUylZAMuA=w1896-h835',
-  'https://lh6.googleusercontent.com/X_XZwoKpaD-EAP8bB0V5pSg95rX8oLbezoh1vZ-QFP94KK7ALLaUJPSaBTYS30bzb4AExWhEJ-I=w1896-h835',
-  'https://lh3.googleusercontent.com/G2VpE5JR7N9-TEfBONk2XVaqlQ9sbsO_551yny25fFmMG4kBSwXgwSc9xWrcH3NH0CEInurcUUw=w1896-h835',
-  'https://lh3.googleusercontent.com/z5Lo6EffeSxyOlqCWWa0xIUf95L4H2AsFnM3MY7UiCrtU7JJpbzdqByGWtF4I4nFJ8ngwWRv6A0=w1896-h835',
-  'https://lh4.googleusercontent.com/2bnnYxtcdQ8QngMjctdS1YALedLGgPJLUfJIHWnYP7KemHUcx_OlG1nkU_DGQJdUK7LRtK_KEEs=w1896-h835',
-  'https://lh4.googleusercontent.com/bw9ZPAavTIpV_2wK3RZuOu3_RjCh9IubY-6ZViZ7ROC0ruxiDpo5N4WuIf2lG3xvR5MYhVpbgG8=w1896-h835',
-  'https://lh5.googleusercontent.com/KqUIyxi5fl2L1UwhOsXbj34EHimcH1Gypx2kM_vhvEabO70MuXsgXaWaXob5smZBOxD85c6mE_c=w1896-h835',
-  'https://lh5.googleusercontent.com/xDnghLnT_AACdZha8ZU6qlGlUpa_ft1lGZiVgsrF0muVo4cjkwImApUJXlB8F4iInG_1eevAEEc=w1896-h835',
-  'https://lh3.googleusercontent.com/qPkhdCDpBLEJyfmAtITRUjBZWlJIzzsHpOTOd-Z_XCHoHObk4KejAE2LVExCDMJamUfDJwPB_zY=w1896-h835',
-  'https://lh3.googleusercontent.com/qbZ2uEe98lMJ8V4bj1fwFaBAMUBveKLAFTFKThFx5euwuyzSOC7NOmIcOHe8B1MpZDi2NeHffJM=w1896-h835',
-  'https://lh4.googleusercontent.com/Mh9IZg1qaB0BSYCQTDxgUczPNo-WVt-VUwJY5OYE_nP8hmfUNHhP9VOUbk1Hi3kxcjhB1-leapU=w1896-h835',
-  'https://lh6.googleusercontent.com/m2ORr31tRKELq5dXQvUUUIxYn0_B8z3xJkZeQCZJ-25xRRzVWq4rPZP73r3l_KWyPT8Bc_hAtj4=w1896-h835',
-  'https://lh3.googleusercontent.com/btp9YJ6ob-rJauzXY-A112BZONqDJeR2wDnNRmSfBIaaxnDOBci74UtesFB3VzsO29NlOu94yJc',
-  'https://lh6.googleusercontent.com/1ZMZMw0Ba3DW1FwwAClWvAw7Fv8hI2OOjx1dCll7p2C2xwy4Mb2KEojUmfM6J9OGfq67xGewEqI=w1896-h835',
-  'https://lh3.googleusercontent.com/PEwIQGjHedgpibZEjS-gw3XS683cjVqLH6DpBYVZyRJClcxN6vfhgYxwa0DO6o2LF_zEjuWWKwY=w1896-h835',
-  'https://lh4.googleusercontent.com/rNQStUJ-Ak4V4FW8reC6v5amNMJIBpIZbr143wbnmjZFzOl3hEudnJcPiFrwxKoB3O2UFerqiUw=w1896-h835',
-  'https://lh5.googleusercontent.com/yVZm70VYnCalZucGxA2sKnUAgMMtjBuYFV-r4yVCbesjGz-tVFYoWqkul2fRjXU6-RJnQm9g-cg=w1896-h835'
+var hsImages = {
+  bows: [],
+  emails: [],
+  animAds: [],
+  mttSplash: [],
+  pencilAds: [],
+  regAds: [],
+  jokeAds: []
+};
+
+hsImages.bows = [
+  'http://i.imgur.com/O1ASpxZ.jpg',
+  'http://i.imgur.com/u0NvfBS.jpg',
+  'http://i.imgur.com/8si1cDT.jpg',
+  'http://i.imgur.com/uGsufEw.jpg',
+  'http://i.imgur.com/g66KvJw.jpg',
+  'http://i.imgur.com/ytcGHOe.jpg',
+  'http://i.imgur.com/WnMNkuX.jpg',
+  'http://i.imgur.com/evHdKtE.jpg',
+  'http://i.imgur.com/8Bmk5WQ.jpg',
+  'http://i.imgur.com/RMQe5LR.jpg'
 ];
 
-var imgHtmlStrings = _.map(hsImages, function(imageURL) {
-  return '<img src="' + imageURL + '">';
-});
+hsImages.emails = [
+  'http://i.imgur.com/etRFYlh.jpg',
+  'http://i.imgur.com/TKaJd2X.jpg',
+  'http://i.imgur.com/cRFdNUi.jpg'
+];
 
-$('.hsImagesContainer').html(imgHtmlStrings.join(''));
+hsImages.animAds = [
+  'http://i.imgur.com/FKhfQUp.jpg',
+  'http://i.imgur.com/mHkHi6T.jpg',
+  'http://i.imgur.com/WzE2I8X.jpg',
+  'http://i.imgur.com/kihTXiN.jpg',
+  'http://i.imgur.com/auzZkSL.jpg'
+];
+
+hsImages.mttSplash = [
+  'http://i.imgur.com/veXN6OF.jpg'
+];
+
+hsImages.pencilAds = [
+  'http://i.imgur.com/MK2BEYd.jpg',
+  'http://i.imgur.com/mmmvTrB.jpg',
+  'http://i.imgur.com/T2xV0un.jpg',
+  'http://i.imgur.com/OA5TpPs.jpg'
+];
+
+hsImages.regAds = [
+  'http://i.imgur.com/6piX0ZR.jpg',
+  'http://i.imgur.com/EjrSbHw.jpg',
+  'http://i.imgur.com/4j0mkZi.jpg'
+];
+
+hsImages.jokeAds = [
+  'http://i.imgur.com/Aizw7hU.jpg',
+  'http://i.imgur.com/xyPq7q4.jpg'
+];
+
+var makeImageHtml = function(imageArr) {
+  return _.map(imageArr, function(imageURL) {
+      return '<img src="' + imageURL + '">';
+  }).join('');
+};
+
+for(var propName in hsImages) {
+  var imageHTMLs = makeImageHtml(hsImages[propName]);
+  $('.' + propName + 'Container').html(imageHTMLs);
+}
 
 </script>
 </body>
